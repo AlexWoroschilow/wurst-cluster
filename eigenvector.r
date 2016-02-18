@@ -1,7 +1,7 @@
 options(expressions = 50000)
 root=dirname(sys.frame(1)$ofile)
-source(paste(root,'/lib/igraph.r', sep=""))
-source(paste(root,'/lib/assert.r', sep=""))
+source('lib/igraph.r', chdir = TRUE)
+source('lib/assert.r', chdir = TRUE)
 
 arguments = commandArgs(trailingOnly = TRUE)
 
