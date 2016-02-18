@@ -1,9 +1,9 @@
 options(expressions = 50000)
-source('~/Projects/GraphToCluster/lib/igraph.r')
-source('~/Projects/GraphToCluster/lib/assert.r')
+root=dirname(sys.frame(1)$ofile)
+source(paste(root,'/lib/igraph.r', sep=""))
+source(paste(root,'/lib/assert.r', sep=""))
 
 arguments = commandArgs(trailingOnly = TRUE)
-
 
 assert(!is.na((file_ncol = arguments[1])), "You have to define an input file, for example super_graph.ncol")
 assert(!is.na((file_clust = arguments[2])), "You have to define an output file, for example super_graph.clust")
