@@ -1,8 +1,22 @@
 #!/bin/env Rscript
+# setwd()
+# 
+
+script.path <- function(){
+    cmd.args <- commandArgs()
+    m <- regexpr("(?<=^--file=).+", cmd.args, perl=TRUE)
+    script.dir <- dirname(regmatches(cmd.args, m))
+    if(length(script.dir) == 0) stop("can't determine script dir: please call the script with Rscript")
+    if(length(script.dir) > 1) stop("can't determine script dir: more than one '--file' argument detected")
+    return(script.dir)
+}
 
 arguments = commandArgs(trailingOnly = TRUE)
+setwd(script.path())
+
 source('lib/igraph.r', chdir = TRUE)
 source('lib/assert.r', chdir = TRUE)
+
 
 
 assert(!is.na((file_source = arguments[1])), "You have to define an input file, for example super_graph.ncol")
