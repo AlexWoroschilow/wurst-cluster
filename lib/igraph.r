@@ -111,8 +111,21 @@ cluster.leading.eigenvector.community = function (graph) {
   
   collection = decompose.graph(graph, min.vertices = 0)
   cluster_i = 0
+  collection_c = length(collection)
   for (subgraph_i in 1:length(collection)) {
     subgraph = simplify(collection[[subgraph_i]], TRUE, TRUE, edge.attr.comb = list(weight = "max"))
+    subgraph_vc = length(V(subgraph))
+    subgraph_ec = length(E(subgraph))
+    
+    cat(
+      paste(
+        "subgraph:", subgraph_i,
+        "|V|", subgraph_vc,
+        "|E|", subgraph_ec,
+        "done:", (subgraph_i / collection_c * 100),
+        "% \n"
+      )
+    )
     
     if (length(V(subgraph)) < 5) {
       cluster_i = cluster_i + 1
