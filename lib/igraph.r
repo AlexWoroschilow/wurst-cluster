@@ -112,7 +112,7 @@ cluster.leading.eigenvector.community = function (graph) {
   collection = decompose.graph(graph, min.vertices = 0)
   cluster_i = 0
   collection_c = length(collection)
-  for (subgraph_i in 1:length(collection)) {
+  for (subgraph_i in 1:collection_c) {
     subgraph = simplify(collection[[subgraph_i]], TRUE, TRUE, edge.attr.comb = list(weight = "max"))
     subgraph_vc = length(V(subgraph))
     subgraph_ec = length(E(subgraph))
@@ -127,9 +127,9 @@ cluster.leading.eigenvector.community = function (graph) {
       )
     )
     
-    if (length(V(subgraph)) < 5) {
+    if (subgraph_vc < 5) {
       cluster_i = cluster_i + 1
-      for (index in 1:length(V(subgraph))) {
+      for (index in 1:subgraph_vc) {
         clustering[result_i,] <-
           list(cluster_i, index, V(subgraph)[index]$name)
         result_i <- result_i + 1
