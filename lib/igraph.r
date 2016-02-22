@@ -100,16 +100,17 @@ modularity.partitioning = function(g,sg,indvsbl) {
 
 
 cluster.leading.eigenvector.community = function (graph) {
+  count_v = length(V(graph));
+  
   clustering <-
     data.frame(
-      cluster = rep(NA, length(V(graph))),
-      index = rep(NA, length(V(graph))),
-      name = rep(NA, length(V(graph)))
+      cluster = rep(NA, count_v),index = rep(NA, count_v),name = rep(NA, count_v)
     )
   
-  result_i = 1;
+  collection = decompose.graph(graph, min.vertices = 1)
   
-  collection = decompose.graph(graph, min.vertices = 0)
+  
+  result_i = 1;
   cluster_i = 0
   collection_c = length(collection)
   for (subgraph_i in 1:collection_c) {
@@ -140,7 +141,7 @@ cluster.leading.eigenvector.community = function (graph) {
     communities = detect.communities(subgraph, 3)
     membership = communities$membership
     
-    for (community in sort(membership)) {
+    for (community in sort(unique(membership))) {
       cluster_i = cluster_i + 1
       community_i = 1
       for (index in 1:length(membership)) {
