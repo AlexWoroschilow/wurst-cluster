@@ -10,32 +10,13 @@ sub main ($ $ $ $) {
 	my ( $cluster_aacid, $cluster_salami, $graph_aacid, $graph_salami ) =
 	  ( $_[0], $_[1], $_[2], $_[3] );
 
-	my @structures_aacid = create_structure_list($graph_aacid);
-	my $structures_aacid_count = scalar(@structures_aacid);
-	(print("Count: $graph_aacid: $structures_aacid_count\n"));
-
-	#my @structures_salami = create_structure_list($graph_salami);
-	#my $structures_salami_count = scalar(@structures_salami);
-	#(print("Count: $graph_salami: $structures_salami_count\n"));
-	
-	my @structures = @structures_aacid;
-	#if($structures_aacid_count < $structures_salami_count) {
-	#	@structures =@structures_aacid;
-	#	undef @structures_salami;
-	#	undef $structures_salami_count;
-	#} else {
-	#	@structures =@structures_salami;
-	#	undef @structures_aacid;
-	#	undef $structures_aacid_count;
-	#}
-	
+	my @structures = create_structure_list($graph_aacid);
 	my $structures_count = scalar(@structures);
 	(print("Count: structures: $structures_count\n"));
 
 	my %hashtable_cluster_aacid  = create_hashtable_cluster($cluster_aacid);
 	my $hashtable_cluster_aacid_count = scalar(keys %hashtable_cluster_aacid);
 	(print("Count: $cluster_aacid: $hashtable_cluster_aacid_count\n"));
-#exit(print(%hashtable_cluster_aacid));
 
 	my %hashtable_cluster_salami = create_hashtable_cluster($cluster_salami);
 	my $hashtable_cluster_salami_count = scalar(keys %hashtable_cluster_salami);
@@ -51,19 +32,13 @@ sub main ($ $ $ $) {
 
 	print("csv;in both clusters;structure a;structure b;tm_score aacid;tm_score salami\n");
 
-	print($hashtable_cluster_aacid{"2wqxB"});
-
 
 	for my $structure1 (@structures) {
-
-		#print("Structure 1: $structure1\n");
 
 		next if( not exists $hashtable_cluster_aacid{"$structure1"} 
 			or not exists $hashtable_cluster_salami{"$structure1"});
 
 		for my $structure2 (@structures) {
-
-			#print("Structure 2: $structure2\n");
 
 			next if ( not exists $hashtable_cluster_aacid{$structure2} 
 				or not exists $hashtable_cluster_salami{$structure2});
