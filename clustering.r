@@ -1,6 +1,7 @@
 #!/bin/env Rscript
 # setwd()
 # 
+options(warn=0)
 
 script.path <- function(){
     cmd.args <- commandArgs()

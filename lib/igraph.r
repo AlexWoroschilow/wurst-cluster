@@ -79,11 +79,11 @@ modularity.partitioning = function(g,sg,indvsbl) {
   ## COLOR VERTICES IN THE COMMUNITY
   ## RECURSIVELY EXPLORE THE PARTITION OF NEGATIVE EIGENVECTOR CONTRIBUTIONS
   if (length(neg) > 0) {
-    g <- modularity.partitioning(g,subgraph(g,V(sg)$lbl[neg]),indvsbl)
+    g <- modularity.partitioning(g,induced_subgraph(g,V(sg)$lbl[neg]),indvsbl)
   }
   ## RECURSIVELY EXPLORE THE PARTITION OF POSITIVE EIGENVECTOR CONTRIBUTIONS
   if (length(pos) > 0) {
-    g <- modularity.partitioning(g,subgraph(g,V(sg)$lbl[pos]),indvsbl)
+    g <- modularity.partitioning(g,induced_subgraph(g,V(sg)$lbl[pos]),indvsbl)
   }
   return(g)
 }
