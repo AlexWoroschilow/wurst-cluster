@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 # Copyright 2015 Alex Woroschilow (alex.woroschilow@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,28 +9,19 @@
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+package ZBH::Local;
+@EXPORT    = qw(is_background_process);
 use strict;
 use warnings;
+use Data::Dump qw( dump pp );
 
-use FindBin;
-use lib "$FindBin::Bin/lib/perl";
-use Config::Simple;
-use ZBH::SGE;
-use ZBH::Local;
-
-sub main ($) {
-
+sub is_background_process ($) {
 	my $starter = shift;
+	my $name = substr( $starter, rindex( $starter, "/" ) + 1 );
 
-	# Check is all processes already started
-	# using Sug Grid Engine
-	return ("started") if ( 
-		ZBH::Local::is_background_process($starter)
-		||  ZBH::SGE::is_background_process_sge($starter) );
+	my $result = `ps -eo comm`;
 
-	# If process not started and not finished
-	# it is ready to be started
-	return ("ready");
+	return ( index( $result, $name ) > -1 );
 }
 
-exit( print( main("$FindBin::Bin/bin/clustering.sh") ) );
+1;
